@@ -44,4 +44,5 @@ function WordPress_Plugin_Template () {
 	return $instance;
 }
 
-WordPress_Plugin_Template();
+
+ WordPress_Plugin_Template()->register_post_type( 'widget', __( 'Widgets', '' ), __( 'Widget', 'wordpress-plugin-template' ) );

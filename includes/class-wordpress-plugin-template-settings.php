@@ -52,6 +52,8 @@ class WordPress_Plugin_Template_Settings {
 
 		// Add settings link to plugins page
 		add_filter( 'plugin_action_links_' . plugin_basename( $this->parent->file ) , array( $this, 'add_settings_link' ) );
+		
+		add_action( 'admin_menu', array( $this, 'settings_assets' ) );
 	}
 
 	/**
@@ -67,8 +69,10 @@ class WordPress_Plugin_Template_Settings {
 	 * @return void
 	 */
 	public function add_menu_item () {
+	    
 		$page = add_options_page( __( 'Plugin Settings', 'wordpress-plugin-template' ) , __( 'Plugin Settings', 'wordpress-plugin-template' ) , 'manage_options' , $this->parent->_token . '_settings' ,  array( $this, 'settings_page' ) );
-		add_action( 'admin_print_styles-' . $page, array( $this, 'settings_assets' ) );
+
+		
 	}
 
 	/**
@@ -257,8 +261,10 @@ class WordPress_Plugin_Template_Settings {
 					register_setting( $this->parent->_token . '_settings', $option_name, $validation );
 
 					// Add field to page
+					
 					add_settings_field( $field['id'], $field['label'], array( $this->parent->admin, 'display_field' ), $this->parent->_token . '_settings', $section, array( 'field' => $field, 'prefix' => $this->base ) );
 				}
+				
 
 				if ( ! $current_section ) break;
 			}
