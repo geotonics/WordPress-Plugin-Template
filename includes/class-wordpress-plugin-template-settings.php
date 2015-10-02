@@ -70,7 +70,7 @@ class WordPress_Plugin_Template_Settings {
 	 */
 	public function add_menu_item () {
 	    
-		$page = add_options_page( __( 'Plugin Settings', 'wordpress-plugin-template' ) , __( 'Plugin Settings', 'wordpress-plugin-template' ) , 'manage_options' , $this->parent->_token . '_settings' ,  array( $this, 'settings_page' ) );
+		$page = add_options_page( __( 'Plugin Template Settings', 'wordpress-plugin-template' ) , __( 'Plugin Settings', 'wordpress-plugin-template' ) , 'manage_options' , $this->parent->_token . '_settings' ,  array( $this, 'settings_page' ) );
 
 		
 	}
@@ -284,7 +284,7 @@ class WordPress_Plugin_Template_Settings {
 
 		// Build page HTML
 		$html = '<div class="wrap" id="' . $this->parent->_token . '_settings">' . "\n";
-			$html .= '<h2>' . __( 'Plugin Settings' , 'wordpress-plugin-template' ) . '</h2>' . "\n";
+			$html .= '<h2>' . __( 'Plugin Template' , 'wordpress-plugin-template' ) . '</h2>' . "\n";
 
 			$tab = '';
 			if ( isset( $_GET['tab'] ) && $_GET['tab'] ) {

@@ -21,6 +21,10 @@ CLASS=${NAME// /_}
 TOKEN=$( tr '[A-Z]' '[a-z]' <<< $CLASS)
 SLUG=${TOKEN//_/-}
 
+echo "CLASS:$CLASS"
+echo "TOKEN:$TOKEN"
+echo "SLUG:$SLUG"
+echo "NAME:$NAME"
 git clone https://github.com/geotonics/$DEFAULT_SLUG.git $FOLDER/$SLUG
 
 echo "Removing git files..."
@@ -113,6 +117,10 @@ cp class-$SLUG-settings.php class-$SLUG-settings.tmp
 sed "s/$DEFAULT_SLUG/$SLUG/g" class-$SLUG-settings.tmp > class-$SLUG-settings.php
 rm class-$SLUG-settings.tmp
 
+cp class-$SLUG-settings.php class-$SLUG-settings.tmp
+sed "s/Plugin Template/$NAME/g" class-$SLUG-settings.tmp > class-$SLUG-settings.php
+rm class-$SLUG-settings.tmp
+
 
 mv class-$DEFAULT_SLUG-initialize.php class-$SLUG-initialize.php
 
@@ -182,3 +190,6 @@ if [ "$NEWREPO" == "y" ]; then
 fi
 
 echo "Complete!"
+
+printf "Press Enter To Finish"
+read ENTER
