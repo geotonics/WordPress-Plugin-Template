@@ -1,6 +1,6 @@
 === WordPress Plugin Template ===
 Contributors: hlashbrooke
-Donate link: http://www.hughlashbrooke.com/donate
+Donate link: http://geotonics.com/donate
 Tags: wordpress, plugin, template
 Requires at least: 3.9
 Tested up to: 4.0

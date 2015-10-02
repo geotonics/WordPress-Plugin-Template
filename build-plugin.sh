@@ -114,6 +114,21 @@ sed "s/$DEFAULT_SLUG/$SLUG/g" class-$SLUG-settings.tmp > class-$SLUG-settings.ph
 rm class-$SLUG-settings.tmp
 
 
+mv class-$DEFAULT_SLUG-initialize.php class-$SLUG-initialize.php
+
+cp class-$SLUG-initialize.php class-$SLUG-initialize.tmp
+sed "s/$DEFAULT_CLASS/$CLASS/g" class-$SLUG-initialize.tmp > class-$SLUG-initialize.php
+rm class-$SLUG-initialize.tmp
+
+cp class-$SLUG-initialize.php class-$SLUG-initialize.tmp
+sed "s/$DEFAULT_TOKEN/$TOKEN/g" class-$SLUG-initialize.tmp > class-$SLUG-initialize.php
+rm class-$SLUG-initialize.tmp
+
+cp class-$SLUG-initialize.php class-$SLUG-initialize.tmp
+sed "s/$DEFAULT_SLUG/$SLUG/g" class-$SLUG-initialize.tmp > class-$SLUG-initialize.php
+rm class-$SLUG-initialize.tmp
+
+
 cd lib
 mv class-$DEFAULT_SLUG-post-type.php class-$SLUG-post-type.php
 
