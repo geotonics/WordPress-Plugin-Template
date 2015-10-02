@@ -265,7 +265,6 @@ class WordPress_Plugin_Template_Admin_API {
 	    
 	    
 	    if (!$this->num_meta_boxes) {
-	        echo 'xxxx';
             wp_nonce_field( "wordpress-plugin-template_".$post->post_type, "wordpress-plugin-template_".$post->post_type.'_nonce' );
 		}
 		
