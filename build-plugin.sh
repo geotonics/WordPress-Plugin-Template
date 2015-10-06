@@ -121,6 +121,22 @@ cp class-$SLUG-settings.php class-$SLUG-settings.tmp
 sed "s/Plugin Template/$NAME/g" class-$SLUG-settings.tmp > class-$SLUG-settings.php
 rm class-$SLUG-settings.tmp
 
+
+mv class-$DEFAULT_SLUG-meta.php class-$SLUG-meta.php
+
+cp class-$SLUG-meta.php class-$SLUG-meta.tmp
+sed "s/$DEFAULT_CLASS/$CLASS/g" class-$SLUG-meta.tmp > class-$SLUG-meta.php
+rm class-$SLUG-meta.tmp
+
+cp class-$SLUG-meta.php class-$SLUG-meta.tmp
+sed "s/$DEFAULT_TOKEN/$TOKEN/g" class-$SLUG-meta.tmp > class-$SLUG-meta.php
+rm class-$SLUG-meta.tmp
+
+cp class-$SLUG-meta.php class-$SLUG-meta.tmp
+sed "s/$DEFAULT_SLUG/$SLUG/g" class-$SLUG-meta.tmp > class-$SLUG-meta.php
+rm class-$SLUG-meta.tmp
+
+
 cd lib
 mv class-$DEFAULT_SLUG-post-type.php class-$SLUG-post-type.php
 
