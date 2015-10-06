@@ -22,6 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // Load plugin class files
 require_once( 'includes/class-wordpress-plugin-template.php' );
 require_once( 'includes/class-wordpress-plugin-template-settings.php' );
+require_once( 'includes/class-wordpress-plugin-template-meta.php' );
 
 // Load plugin libraries
 require_once( 'includes/lib/class-wordpress-plugin-template-admin-api.php' );
@@ -40,9 +41,14 @@ function WordPress_Plugin_Template () {
 	if ( is_null( $instance->settings ) ) {
 		$instance->settings = WordPress_Plugin_Template_Settings::instance( $instance );
 	}
-
+	
+	if ( is_null( $instance->meta ) ) {
+	    $instance->meta=Wordpress_Plugin_Template_Meta::instance($instance);
+    }
+    
 	return $instance;
 }
 
 
- WordPress_Plugin_Template()->register_post_type( 'widget', __( 'Widgets', '' ), __( 'Widget', 'wordpress-plugin-template' ) );
+ WordPress_Plugin_Template();
+ 

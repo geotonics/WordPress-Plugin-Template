@@ -19,6 +19,7 @@ class WordPress_Plugin_Template {
 	 * @since   1.0.0
 	 */
 	public $settings = null;
+	public $meta     = null;
 
 	/**
 	 * The version number.

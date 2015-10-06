@@ -11,10 +11,7 @@ class WordPress_Plugin_Template_Admin_API {
 	public function __construct () {
 	    add_action( 'add_meta_boxes', array($this,'add_meta_boxes'));
 		add_action( 'save_post', array( $this, 'save_meta_boxes' ), 10, 1 );
-		
 	}
-	
-	
 
 	/**
 	 * Generate HTML for displaying fields
@@ -38,6 +35,7 @@ class WordPress_Plugin_Template_Admin_API {
 		}
 
 		// Get saved data
+		
 		$data = '';
 		if ( $post ) {
 
@@ -56,7 +54,9 @@ class WordPress_Plugin_Template_Admin_API {
 			// Get saved option
 			$option_name .= $field['id'];
 			$option = get_option( $option_name );
-
+geodb($option_name,'option_name');
+$all_options = wp_load_alloptions();
+geodb($all_options,'alloptions');
 			// Get data to display in field
 			if ( isset( $option ) ) {
 				$data = $option;
@@ -253,6 +253,7 @@ class WordPress_Plugin_Template_Admin_API {
 		    }
 		    
 		}
+		
 	}
 
 	/**
@@ -338,8 +339,8 @@ echo "</table>";
 	function add_meta_boxes(){
            global $post;
            add_filter($post->post_type."_custom_fields", array($this,"custom_fields"),10,2);  
-           $this->add_meta_box ('standard',__( 'Standard', 'wordpress-plugin-template' ),array("page","widget"));
-           $this->add_meta_box ('extra',__( 'Extra', 'wordpress-plugin-template' ), array("page","widget"));
+           $this->add_meta_box ('standard',__( 'Standard', 'wordpress-plugin-template' ),array("page","gizmo"));
+           $this->add_meta_box ('extra',__( 'Extra', 'wordpress-plugin-template' ), array("page","gizmo"));
     }
     
     function custom_fields($fields,$postType){
@@ -352,7 +353,8 @@ echo "</table>";
 					'description'	=> __( 'This is a standard text field.', 'wordpress-plugin-template' ),
 					'type'			=> 'text',
 					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' )
+					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' ),
+                    'tab'           => 0
 				),
 				array(
 					'id' 			=> 'password_field',
@@ -360,7 +362,8 @@ echo "</table>";
 					'description'	=> __( 'This is a standard password field.', 'wordpress-plugin-template' ),
 					'type'			=> 'password',
 					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' )
+					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' ),
+                    'tab'           => 0
 				),
 				array(
 					'id' 			=> 'secret_text_field',
@@ -368,7 +371,8 @@ echo "</table>";
 					'description'	=> __( 'This is a secret text field - any data saved here will not be displayed after the page has reloaded, but it will be saved.', 'wordpress-plugin-template' ),
 					'type'			=> 'text_secret',
 					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' )
+					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' ),
+                    'tab'           => 0
 				),
 				array(
 					'id' 			=> 'text_block',
@@ -376,14 +380,16 @@ echo "</table>";
 					'description'	=> __( 'This is a standard text area.', 'wordpress-plugin-template' ),
 					'type'			=> 'textarea',
 					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text for this textarea', 'wordpress-plugin-template' )
+					'placeholder'	=> __( 'Placeholder text for this textarea', 'wordpress-plugin-template' ),
+                    'tab'           => 0
 				),
 				array(
 					'id' 			=> 'single_checkbox',
 					'label'			=> __( 'An Option', 'wordpress-plugin-template' ),
 					'description'	=> __( 'A standard checkbox - if you save this option as checked then it will store the option as \'on\', otherwise it will be an empty string.', 'wordpress-plugin-template' ),
 					'type'			=> 'checkbox',
-					'default'		=> ''
+					'default'		=> '',
+                    'tab'           => 1
 				),
 				array(
 					'id' 			=> 'select_box',
@@ -391,7 +397,8 @@ echo "</table>";
 					'description'	=> __( 'A standard select box.', 'wordpress-plugin-template' ),
 					'type'			=> 'select',
 					'options'		=> array( 'drupal' => 'Drupal', 'joomla' => 'Joomla', 'wordpress' => 'WordPress' ),
-					'default'		=> 'wordpress'
+					'default'		=> 'wordpress',
+                    'tab'           => 1
 				),
 				array(
 					'id' 			=> 'radio_buttons',
@@ -399,7 +406,8 @@ echo "</table>";
 					'description'	=> __( 'A standard set of radio buttons.', 'wordpress-plugin-template' ),
 					'type'			=> 'radio',
 					'options'		=> array( 'superman' => 'Superman', 'batman' => 'Batman', 'ironman' => 'Iron Man' ),
-					'default'		=> 'batman'
+					'default'		=> 'batman',
+                    'tab'           => 1
 				),
 				array(
 					'id' 			=> 'multiple_checkboxes',
@@ -407,7 +415,8 @@ echo "</table>";
 					'description'	=> __( 'You can select multiple items and they will be stored as an array.', 'wordpress-plugin-template' ),
 					'type'			=> 'checkbox_multi',
 					'options'		=> array( 'square' => 'Square', 'circle' => 'Circle', 'rectangle' => 'Rectangle', 'triangle' => 'Triangle' ),
-					'default'		=> array( 'circle', 'triangle' )
+					'default'		=> array( 'circle', 'triangle' ),
+                    'tab'           => 1
 				)
 		    );
 
@@ -457,3 +466,4 @@ echo "</table>";
         }
 
 }
+
