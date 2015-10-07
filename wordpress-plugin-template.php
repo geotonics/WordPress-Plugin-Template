@@ -44,7 +44,7 @@ function WordPress_Plugin_Template () {
 	
 	// add metas
 	if ( is_null( $instance->meta ) ) {
-	    $instance->meta = Wordpress_Plugin_Template_Meta::instance($instance);
+	    $instance->meta = WordPress_Plugin_Template_Meta::instance($instance);
     }
     
 	return $instance;
