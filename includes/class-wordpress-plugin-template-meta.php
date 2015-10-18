@@ -44,7 +44,7 @@ class WordPress_Plugin_Template_Meta
     
     function custom_fields($fields,$postType){
             $fields=array();
-            $settings['standard']["tabs"]["Text"] = array(
+            $settings['standard']["tabs"]["Text Fields"] = array(
 				array(
 					'id' 			=> 'text_field',
 					'label'			=> __( 'Some Text' , 'wordpress-plugin-template' ),
@@ -74,7 +74,7 @@ class WordPress_Plugin_Template_Meta
 				)
 		);
 		
-		$settings['standard']["tabs"]["Options"]= array(
+		$settings['standard']["tabs"]["Option Fields"]= array(
 				array(
 					'id' 			=> 'single_checkbox',
 					'label'			=> __( 'An Option', 'wordpress-plugin-template' ),

@@ -302,7 +302,7 @@ class WordPress_Plugin_Template_Admin_API {
 		        <ul class="category-tabs">';
 		        
 		        foreach($tabs["tabs"] as $tab_name=>$tab) {
-		            echo '<li><a href="#'.$tab_name.'">'.$tab_name.'</a></li>';
+		            echo '<li><a href="#'. $this->css_encode($tab_name).'">'.$tab_name.'</a></li>';
 		        } 
 		        echo '</ul> <br class="clear" />';
 		        $tabnum=0;
@@ -310,10 +310,11 @@ class WordPress_Plugin_Template_Admin_API {
 		        foreach($tabs["tabs"] as $tab_name=>$tab) {
 		            
 		            if($tabnum){
-		                echo '<div id="'.$tab_name.'" class="hidden">';
+		                $link_class="hidden";
 		            } else {
-		                echo '<div id="'.$tab_name.'">';
+		                $link_class="";
 		            }
+	                echo '<div id="'.$this->css_encode($tab_name).'" class="'.$link_class.'">';
 		            $tabnum++;
 		            $this->display_metabox_fields($name,$tab,$post,$args);
 		            echo '</div>';
@@ -398,6 +399,10 @@ echo "</table>";
 			
 		}
 		
+	}
+	
+	public function css_encode($id){
+	    return strtolower(str_replace(" ","_",$id));   
 	}
 	
 
