@@ -50,6 +50,4 @@ function WordPress_Plugin_Template () {
 	return $instance;
 }
 
-
- WordPress_Plugin_Template();
- 
+WordPress_Plugin_Template();

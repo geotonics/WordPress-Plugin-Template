@@ -20,61 +20,31 @@ class WordPress_Plugin_Template_Meta
 	 */
 	public $parent = null; 
     
-    private $num_meta_boxes=0;
 	/**
 	 * Constructor function
 	 */
 	public function __construct ($parent) {
 	    $this->parent = $parent;
-	    $parent->register_post_type( 'gizmo', __( 'Gizmos', '' ), __( 'Gizmos', 'wordpress-plugin-template' ) );
+	    
+	    // Register an example custom type:gizmo
+	    $this->parent->register_post_type( 'gizmo', __( 'Gizmos', '' ), __( 'Gizmos', 'wordpress-plugin-template' ) );
+	    
+	    // Register a custom taxonomy for gizmos
+	    $this->parent->register_taxonomy( 'gizmo_categories', __( 'Gizmo Categories', 'wordpress-plugin-template' ), __( 'Gizmo Category', 'wordpress-plugin-template' ), 'gizmo' );
+	    
 	    add_action( 'add_meta_boxes', array($this,'add_meta_boxes'));
-		
-	}
-
-	/**
-	 * Add meta box to the dashboard
-	 * @param string $id            Unique ID for metabox
-	 * @param string $title         Display title of metabox
-	 * @param array  $post_type    Post type to which this metabox applies
-	 * @param string $context       Context in which to display this metabox ('advanced' or 'side')
-	 * @param string $priority      Priority of this metabox ('default', 'low' or 'high')
-	 * @param array  $callback_args Any axtra arguments that will be passed to the display function for this metabox
-	 * @return void
-	 */
-	public function add_meta_box ( $id = '', $title = '', $post_types = array(), $context = 'advanced', $priority = 'default', $callback_args = null ) {
-        global $post;
-
-		// Get post type(s)
-		if ( ! is_array( $post_types ) ) {
-			$post_types = array( $post_types );
-		}
-
-		// Generate each metabox
-		foreach ( $post_types as $post_type ) {
-		    
-		    if($post->post_type==$post_type){
-    		    geodb("adding ".$post_type." metaboxes");
-    		    add_meta_box( $id, $title, array( $this, 'meta_box_content' ), $post_type, $context, $priority, $callback_args );
-		    }
-		    
-		}
-		
 	}
 
 	function add_meta_boxes(){
            global $post;
-           
            add_filter($post->post_type."_custom_fields", array($this,"custom_fields"),10,2);  
-           $this->add_meta_box ('standard',__( 'Standard', 'wordpress-plugin-template' ),array("page","gizmo"));
-           $this->add_meta_box ('extra',__( 'Extra', 'wordpress-plugin-template' ), array("page","gizmo"));
+           $this->parent->admin->add_meta_box ('standard',__( 'Standard', 'wordpress-plugin-template' ),array("page","gizmo"));
+           $this->parent->admin->add_meta_box ('extra',__( 'Extra', 'wordpress-plugin-template' ), array("page","gizmo"));
     }
     
-    
-    
     function custom_fields($fields,$postType){
-        
             $fields=array();
-            $settings['standard'] = array(
+            $settings['standard']["tabs"]["Text"] = array(
 				array(
 					'id' 			=> 'text_field',
 					'label'			=> __( 'Some Text' , 'wordpress-plugin-template' ),
@@ -101,16 +71,10 @@ class WordPress_Plugin_Template_Meta
 					'default'		=> '',
 					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' ),
                     'tab'           => 0
-				),
-				array(
-					'id' 			=> 'text_block',
-					'label'			=> __( 'A Text Block' , 'wordpress-plugin-template' ),
-					'description'	=> __( 'This is a standard text area.', 'wordpress-plugin-template' ),
-					'type'			=> 'textarea',
-					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text for this textarea', 'wordpress-plugin-template' ),
-                    'tab'           => 0
-				),
+				)
+		);
+		
+		$settings['standard']["tabs"]["Options"]= array(
 				array(
 					'id' 			=> 'single_checkbox',
 					'label'			=> __( 'An Option', 'wordpress-plugin-template' ),
@@ -147,8 +111,17 @@ class WordPress_Plugin_Template_Meta
                     'tab'           => 1
 				)
 		    );
-
-		$settings['extra'] = array(
+            $settings['standard']["fields"][]=
+				array(
+					'id' 			=> 'text_block',
+					'label'			=> __( 'A Text Block' , 'wordpress-plugin-template' ),
+					'description'	=> __( 'This is a standard text area.', 'wordpress-plugin-template' ),
+					'type'			=> 'textarea',
+					'default'		=> '',
+					'placeholder'	=> __( 'Placeholder text for this textarea', 'wordpress-plugin-template' ),
+                    'tab'           => 0
+				);
+		    $settings['extra'] = array(
 				array(
 					'id' 			=> 'number_field',
 					'label'			=> __( 'A Number' , 'wordpress-plugin-template' ),
@@ -179,59 +152,36 @@ class WordPress_Plugin_Template_Meta
 					'type'			=> 'select_multi',
 					'options'		=> array( 'linux' => 'Linux', 'mac' => 'Mac', 'windows' => 'Windows' ),
 					'default'		=> array( 'linux' )
+				),
+				
+				array(
+					'id' 			=> 'date_picker_field',
+					'label'			=> __( 'A Date Picker Field', 'wordpress-plugin-template' ),
+					'description'	=> __( 'A standard date picker field.', 'wordpress-plugin-template' ),
+					'type'			=> 'date_picker'
+				),
+				array(
+					'id' 			=> 'datetime_picker_field',
+					'label'			=> __( 'A Date Time Picker Field', 'wordpress-plugin-template' ),
+					'description'	=> __( 'A standard date time picker field.', 'wordpress-plugin-template' ),
+					'type'			=> 'datetime_picker'
 				)
+				
 		);
-        
+        return $settings;
         foreach($settings as $metabox=>$metabox_fields){
             
             foreach($metabox_fields as $field){
-                $field["metabox"]=$metabox;
+                $field["metabox"][]=$metabox;
                 $fields[]=$field;
             }                
               
         }     
+    
         return $fields;
-        }
+    }
         
-  /**
-	 * Display metabox content
-	 * @param  object $post Post object
-	 * @param  array  $args Arguments unique to this metabox
-	 * @return void
-	 */
-	public function meta_box_content ( $post, $args ) {
-	    
-	    if (!$this->num_meta_boxes) {
-            wp_nonce_field( "wordpress-plugin-template_".$post->post_type, "wordpress-plugin-template_".$post->post_type.'_nonce' );
-		}
-		
-		$this->num_meta_boxes++;
-		$fields = apply_filters( $post->post_type . '_custom_fields', array(), $post->post_type );
-
-		if ( ! is_array( $fields ) || 0 == count( $fields ) ) return;
-        
-		echo '<div class="custom-field-panel">' . "\n";
- 	echo '<table class="form-table">' . "\n";
-		foreach ( $fields as $field ) {
-
-			if ( ! isset( $field['metabox'] ) ) continue;
-
-			if ( ! is_array( $field['metabox'] ) ) {
-				$field['metabox'] = array( $field['metabox'] );
-			}
-            
-			if ( in_array( $args['id'], $field['metabox'] ) ) {
-				$this->parent->admin->display_meta_box_field( $field, $post );
-			}
-
-		}
-		
-echo "</table>";
-		echo '</div>' . "\n";
-
-	}      
-        
-        /**
+     /**
 	 * Main WordPress_Plugin_Template_Settings Instance
 	 *
 	 * Ensures only one instance of WordPress_Plugin_Template_Settings is loaded or can be loaded.

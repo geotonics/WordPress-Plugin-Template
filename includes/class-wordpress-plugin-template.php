@@ -20,6 +20,7 @@ class WordPress_Plugin_Template {
 	 */
 	public $settings = null;
 	public $meta     = null;
+	public $admin    = null;
 
 	/**
 	 * The version number.
@@ -83,6 +84,7 @@ class WordPress_Plugin_Template {
 	 * @since   1.0.0
 	 * @return  void
 	 */
+	 
 	public function __construct ( $file = '', $version = '1.0.0' ) {
 		$this->_version = $version;
 		$this->_token = 'wordpress_plugin_template';
@@ -94,6 +96,7 @@ class WordPress_Plugin_Template {
 		$this->assets_url = esc_url( trailingslashit( plugins_url( '/assets/', $this->file ) ) );
 
 		$this->script_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$this->script_suffix="";
 
 		register_activation_hook( $this->file, array( $this, 'install' ) );
 
@@ -107,7 +110,7 @@ class WordPress_Plugin_Template {
 
 		// Load API for generic admin functions
 		if ( is_admin() ) {
-			$this->admin = new WordPress_Plugin_Template_Admin_API();
+			$this->admin = new WordPress_Plugin_Template_Admin_API($this);
 		}
 
 		// Handle localisation
@@ -158,6 +161,7 @@ class WordPress_Plugin_Template {
 	public function enqueue_styles () {
 		wp_register_style( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'css/frontend.css', array(), $this->_version );
 		wp_enqueue_style( $this->_token . '-frontend' );
+		
 	} // End enqueue_styles ()
 
 	/**
@@ -180,6 +184,13 @@ class WordPress_Plugin_Template {
 	public function admin_enqueue_styles ( $hook = '' ) {
 		wp_register_style( $this->_token . '-admin', esc_url( $this->assets_url ) . 'css/admin.css', array(), $this->_version );
 		wp_enqueue_style( $this->_token . '-admin' );
+		
+		wp_register_style('jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css');
+        wp_enqueue_style( 'jquery-ui' ); 
+		wp_enqueue_style(
+            $this->_token.' datetime-picker-style',
+            esc_url( $this->assets_url ) . 'css/jquery-ui-timepicker-addon.css'
+        ); 
 	} // End admin_enqueue_styles ()
 
 	/**
@@ -189,8 +200,15 @@ class WordPress_Plugin_Template {
 	 * @return  void
 	 */
 	public function admin_enqueue_scripts ( $hook = '' ) {
-		wp_register_script( $this->_token . '-admin', esc_url( $this->assets_url ) . 'js/admin' . $this->script_suffix . '.js', array( 'jquery' ), $this->_version );
+		wp_register_script( $this->_token . '-admin', esc_url( $this->assets_url ) . 'js/admin' . $this->script_suffix . '.js', array( 'jquery', 'jquery-ui-tabs' ), $this->_version );
 		wp_enqueue_script( $this->_token . '-admin' );
+		
+		wp_enqueue_script(
+            $this->_token.'jquery-datetimepicker',
+            esc_url( $this->assets_url ) . 'js/jquery-ui-timepicker-addon.js',
+            array('jquery','jquery-ui-datepicker')
+        );
+        
 	} // End admin_enqueue_scripts ()
 
 	/**
