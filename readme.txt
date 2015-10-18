@@ -1,5 +1,5 @@
 === WordPress Plugin Template ===
-Contributors: hlashbrooke
+Contributors: geotonics
 Donate link: http://geotonics.com/donate
 Tags: wordpress, plugin, template
 Requires at least: 3.9
