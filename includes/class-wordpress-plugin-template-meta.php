@@ -169,16 +169,6 @@ class WordPress_Plugin_Template_Meta
 				
 		);
         return $settings;
-        foreach($settings as $metabox=>$metabox_fields){
-            
-            foreach($metabox_fields as $field){
-                $field["metabox"][]=$metabox;
-                $fields[]=$field;
-            }                
-              
-        }     
-    
-        return $fields;
     }
         
      /**

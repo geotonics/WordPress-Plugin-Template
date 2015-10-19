@@ -327,7 +327,6 @@ class WordPress_Plugin_Template_Admin_API {
 		        }
 		        
 		    } else {
-		        geodb($tabs,'sname:'.$name);
 		        $this->display_metabox_fields($name,$tabs,$post,$args);
 		    }  
 		}
@@ -382,15 +381,34 @@ echo "</table>";
 		}
 		
         add_filter($post_type."_custom_fields", array($this->parent->meta,"custom_fields"),10,2);                                                
-        $fields = apply_filters( $post_type . '_custom_fields', array(), $post_type );
-    
+        $metaboxes = apply_filters( $post_type . '_custom_fields', array(), $post_type );
   
-		if ( ! is_array( $fields ) || 0 == count( $fields ) ) {
+		if ( ! is_array( $metaboxes ) || 0 == count( $metaboxes ) ) {
 		    return;
 		}
 
-		foreach ( $fields as $field ) {
+		$fields=array();
 
+        foreach ($metaboxes as $metabox) {
+
+            if (isset($metabox["tabs"])) {
+                
+                foreach ($metabox["tabs"] as $tab_fields) {
+                    $fields=array_merge($fields,$tab_fields);
+                }   
+                
+                if (isset($metabox["fields"])) {
+                    $fields=array_merge($fields,$metabox["fields"]);
+                }
+
+            } else{
+                $fields=array_merge($fields,$metabox);
+            }   
+            
+        }
+
+		foreach ( $fields as $field ) {
+            
 			if ( isset( $_REQUEST[ $field['id'] ] ) ) {
 				update_post_meta( $post_id, $field['id'], $this->validate_field( $_REQUEST[ $field['id'] ], $field['type'] ) );
 			} else {
@@ -398,7 +416,7 @@ echo "</table>";
 			}
 			
 		}
-		
+
 	}
 	
 	public function css_encode($id){
