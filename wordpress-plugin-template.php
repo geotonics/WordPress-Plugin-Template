@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // Load plugin class files
 require_once( 'includes/class-wordpress-plugin-template.php' );
 require_once( 'includes/class-wordpress-plugin-template-settings.php' );
-require_once( 'includes/class-wordpress-plugin-template-meta.php' );
+require_once( 'includes/class-wordpress-plugin-template-post-types.php' );
 
 // Load plugin libraries
 require_once( 'includes/lib/class-wordpress-plugin-template-admin-api.php' );
@@ -42,9 +42,9 @@ function WordPress_Plugin_Template () {
 		$instance->settings = WordPress_Plugin_Template_Settings::instance( $instance );
 	}
 	
-	// add metas
+	// add custom post types
 	if ( is_null( $instance->meta ) ) {
-	    $instance->meta = WordPress_Plugin_Template_Meta::instance($instance);
+	    $instance->post_types = WordPress_Plugin_Template_Post_Types::instance($instance);
     }
     
 	return $instance;

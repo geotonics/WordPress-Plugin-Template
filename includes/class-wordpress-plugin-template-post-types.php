@@ -2,10 +2,10 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class WordPress_Plugin_Template_Meta
+class WordPress_Plugin_Template_Post_Types
 {
 /**
-	 * The single instance of WordPress_Plugin_Template_Settings.
+	 * The single instance of WordPress_Plugin_Template_Post_Types.
 	 * @var 	object
 	 * @access  private
 	 * @since 	1.0.0
@@ -51,8 +51,7 @@ class WordPress_Plugin_Template_Meta
 					'description'	=> __( 'This is a standard text field.', 'wordpress-plugin-template' ),
 					'type'			=> 'text',
 					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' ),
-                    'tab'           => 0
+					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' )
 				),
 				array(
 					'id' 			=> 'password_field',
@@ -60,8 +59,7 @@ class WordPress_Plugin_Template_Meta
 					'description'	=> __( 'This is a standard password field.', 'wordpress-plugin-template' ),
 					'type'			=> 'password',
 					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' ),
-                    'tab'           => 0
+					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' )
 				),
 				array(
 					'id' 			=> 'secret_text_field',
@@ -69,8 +67,7 @@ class WordPress_Plugin_Template_Meta
 					'description'	=> __( 'This is a secret text field - any data saved here will not be displayed after the page has reloaded, but it will be saved.', 'wordpress-plugin-template' ),
 					'type'			=> 'text_secret',
 					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' ),
-                    'tab'           => 0
+					'placeholder'	=> __( 'Placeholder text', 'wordpress-plugin-template' )
 				)
 		);
 		
@@ -80,8 +77,7 @@ class WordPress_Plugin_Template_Meta
 					'label'			=> __( 'An Option', 'wordpress-plugin-template' ),
 					'description'	=> __( 'A standard checkbox - if you save this option as checked then it will store the option as \'on\', otherwise it will be an empty string.', 'wordpress-plugin-template' ),
 					'type'			=> 'checkbox',
-					'default'		=> '',
-                    'tab'           => 1
+					'default'		=> ''
 				),
 				array(
 					'id' 			=> 'select_box',
@@ -89,8 +85,7 @@ class WordPress_Plugin_Template_Meta
 					'description'	=> __( 'A standard select box.', 'wordpress-plugin-template' ),
 					'type'			=> 'select',
 					'options'		=> array( 'drupal' => 'Drupal', 'joomla' => 'Joomla', 'wordpress' => 'WordPress' ),
-					'default'		=> 'wordpress',
-                    'tab'           => 1
+					'default'		=> 'wordpress'
 				),
 				array(
 					'id' 			=> 'radio_buttons',
@@ -98,8 +93,7 @@ class WordPress_Plugin_Template_Meta
 					'description'	=> __( 'A standard set of radio buttons.', 'wordpress-plugin-template' ),
 					'type'			=> 'radio',
 					'options'		=> array( 'superman' => 'Superman', 'batman' => 'Batman', 'ironman' => 'Iron Man' ),
-					'default'		=> 'batman',
-                    'tab'           => 1
+					'default'		=> 'batman'
 				),
 				array(
 					'id' 			=> 'multiple_checkboxes',
@@ -107,8 +101,7 @@ class WordPress_Plugin_Template_Meta
 					'description'	=> __( 'You can select multiple items and they will be stored as an array.', 'wordpress-plugin-template' ),
 					'type'			=> 'checkbox_multi',
 					'options'		=> array( 'square' => 'Square', 'circle' => 'Circle', 'rectangle' => 'Rectangle', 'triangle' => 'Triangle' ),
-					'default'		=> array( 'circle', 'triangle' ),
-                    'tab'           => 1
+					'default'		=> array( 'circle', 'triangle' )
 				)
 		    );
             $settings['standard']["fields"][]=
@@ -118,8 +111,7 @@ class WordPress_Plugin_Template_Meta
 					'description'	=> __( 'This is a standard text area.', 'wordpress-plugin-template' ),
 					'type'			=> 'textarea',
 					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text for this textarea', 'wordpress-plugin-template' ),
-                    'tab'           => 0
+					'placeholder'	=> __( 'Placeholder text for this textarea', 'wordpress-plugin-template' )
 				);
 		    $settings['extra'] = array(
 				array(
@@ -158,13 +150,15 @@ class WordPress_Plugin_Template_Meta
 					'id' 			=> 'date_picker_field',
 					'label'			=> __( 'A Date Picker Field', 'wordpress-plugin-template' ),
 					'description'	=> __( 'A standard date picker field.', 'wordpress-plugin-template' ),
-					'type'			=> 'date_picker'
+					'type'			=> 'date_picker',
+					'placeholder'   => '2015-10-01'
 				),
 				array(
 					'id' 			=> 'datetime_picker_field',
 					'label'			=> __( 'A Date Time Picker Field', 'wordpress-plugin-template' ),
 					'description'	=> __( 'A standard date time picker field.', 'wordpress-plugin-template' ),
-					'type'			=> 'datetime_picker'
+					'type'			=> 'datetime_picker',
+					'placeholder'   => '2015-10-29 12:14 am'
 				)
 				
 		);
