@@ -48,12 +48,14 @@ class WordPress_Plugin_Template_Admin_API {
 		if ( isset( $data['prefix'] ) ) {
 			$option_name = $data['prefix'];
 		}
-
+        
+        if(isset($field["post_type"])){
+            $field["options"] = $this->get_post_type_options($post, $field["post_type"]);
+        }
 		// Get saved data
 		
 		$data = '';
 		if ( $post ) {
-
 			// Get saved field data
 			$option_name .= $field['id'];
 			
@@ -202,7 +204,7 @@ class WordPress_Plugin_Template_Admin_API {
 			case 'checkbox_multi':
 			case 'radio':
 			case 'select_multi':
-				$html .= '<br/><span class="description">' . $field['description'] . '</span>';
+				$html .= '<p class="description">' . $field['description'] . '</p>';
 			break;
 
 			default:
@@ -224,6 +226,36 @@ class WordPress_Plugin_Template_Admin_API {
 
 		echo $html;
 
+	}
+	
+	/**
+	 * Get posts as options
+	 * @param  array  $post Post opject
+	 * @param  string $post_type Post type
+	 * @return array
+	 */
+	private function get_post_type_options($post, $post_type){
+	
+        $args=array(
+            'post_type' => $post_type,
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'author' =>$post->post_author
+        );
+        
+        $options = array();
+        $query = new WP_Query($args);
+        
+        if ( $query->have_posts() ) {
+        
+            while ( $query->have_posts() ) {
+		        $query->the_post();
+		        $options[get_the_ID()]=get_the_title();
+	        }
+        }
+        wp_reset_query();  // Restore global post data stomped by the_post().
+        return $options;
+	
 	}
 
 	/**
@@ -265,7 +297,6 @@ class WordPress_Plugin_Template_Admin_API {
 		foreach ( $post_types as $post_type ) {
 		    
 		    if($post->post_type==$post_type){
-    		    
     		    add_meta_box( $id, $title, array( $this, 'meta_box_content' ), $post_type, $context, $priority, $callback_args );
 		    }
 		    
@@ -322,25 +353,31 @@ class WordPress_Plugin_Template_Admin_API {
 		        
 		        echo "</div>";
 		        
-		        if (isset($tabs["fields"])) {
-		           $this->display_metabox_fields($name,$tabs["fields"],$post,$args);     
-		        }
+		       
 		        
 		    } else {
 		        $this->display_metabox_fields($name,$tabs,$post,$args);
 		    }  
+		    
+		    if (isset($tabs["fields"])) {
+		         $this->display_metabox_fields($name,$tabs["fields"],$post,$args);     
+		    }
+		        
 		}
-        
-		
-		//echo my_example_metabox();
 
 	}
     
+    /**
+	 * Dispay fields in metabox
+	 * @param  array  $fields Field data
+	 * @param  object $post  Post object
+	 * @return void
+	 */
     private function display_metabox_fields($metabox,$fields,$post,$args) {
         echo '<div class="custom-field-panel">' . "\n";
  	    echo '<table class="form-table">' . "\n";
 		foreach ( $fields as $field ) {
-				$field['metabox'] = array($metabox);
+			$field['metabox'] = array($metabox);
             
 			if ( in_array( $args['id'], $field['metabox'] ) ) {
 				$this->display_meta_box_field( $field, $post );
@@ -348,9 +385,10 @@ class WordPress_Plugin_Template_Admin_API {
 
 		}
 		
-echo "</table>";
+        echo "</table>";
 		echo '</div>' . "\n";    
     }
+    
 	/**
 	 * Dispay field in metabox
 	 * @param  array  $field Field data
@@ -380,7 +418,7 @@ echo "</table>";
 			return;
 		}
 		
-        add_filter($post_type."_custom_fields", array($this->parent->meta,"custom_fields"),10,2);                                                
+        add_filter($post_type."_custom_fields", array($this->parent->post_types,$post_type."_custom_fields"),10,2);                                                
         $metaboxes = apply_filters( $post_type . '_custom_fields', array(), $post_type );
   
 		if ( ! is_array( $metaboxes ) || 0 == count( $metaboxes ) ) {
@@ -397,13 +435,14 @@ echo "</table>";
                     $fields=array_merge($fields,$tab_fields);
                 }   
                 
-                if (isset($metabox["fields"])) {
-                    $fields=array_merge($fields,$metabox["fields"]);
-                }
 
             } else{
                 $fields=array_merge($fields,$metabox);
             }   
+            
+            if (isset($metabox["fields"])) {
+                $fields=array_merge($fields,$metabox["fields"]);
+            }
             
         }
 
@@ -419,10 +458,13 @@ echo "</table>";
 
 	}
 	
+	/**
+	 * Create slug from Name
+	 * 
+	 * @return string
+	 */
 	public function css_encode($id){
 	    return strtolower(str_replace(" ","_",$id));   
 	}
-	
 
 }
-

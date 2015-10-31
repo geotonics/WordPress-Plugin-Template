@@ -19,7 +19,7 @@ class WordPress_Plugin_Template {
 	 * @since   1.0.0
 	 */
 	public $settings = null;
-	public $meta     = null;
+	public $post_types     = null;
 	public $admin    = null;
 
 	/**

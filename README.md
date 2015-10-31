@@ -58,8 +58,8 @@ This template includes the following features:
 + A library for easily registering a new post type
 + A library for easily registering a new taxonomy
 + A library for handling common admin functions (including adding meta boxes to any post type, displaying settings fields and display custom fields for posts)
-+ A complete and versatile settings class like you see [here](http://geotonics.com/complete-versatile-options-page-class-wordpress-plugin/)
-+ A .pot file to make localisation easier
++ A complete and versatile settings class 
++ A complete and versatile class for creating example post types and thier metaboxes
 + Full text of the GPLv2 license
 
 ## I've got an idea/fix for the template

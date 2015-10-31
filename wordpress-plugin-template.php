@@ -42,8 +42,8 @@ function WordPress_Plugin_Template () {
 		$instance->settings = WordPress_Plugin_Template_Settings::instance( $instance );
 	}
 	
-	// add custom post types
-	if ( is_null( $instance->meta ) ) {
+	// Add custom post types
+	if ( is_null( $instance->post_types ) ) {
 	    $instance->post_types = WordPress_Plugin_Template_Post_Types::instance($instance);
     }
     

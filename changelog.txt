@@ -1,5 +1,9 @@
 *** WordPress Plugin Template Changelog ***
 
+2015.10.30 - version 4.0.0
+ * New - Added class for creating custom post types, adding metaboxes and taxonomies.
+ * New - Added ability to create tabs in metaboxes in api class
+
 2014.08.05 - version 3.0.0
  * New - Library for registering post types
  * New - Library for registering taxonomies

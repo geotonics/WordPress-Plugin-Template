@@ -108,5 +108,32 @@ class WordPress_Plugin_Template_Taxonomy {
 
         register_taxonomy( $this->taxonomy, $this->post_types, apply_filters( $this->taxonomy . '_register_args', $args, $this->taxonomy, $this->post_types ) );
     }
+    
+    public function add_filter(){
+
+        if (isset($_GET["post_type"]) && in_array($_GET["post_type"],$this->post_types)) {
+		    add_action( 'restrict_manage_posts', array($this,'display_filter') );
+	    }
+    }
+
+    public function display_filter() {
+	
+		$tax_obj = get_taxonomy($this->taxonomy);
+		$tax_name = $tax_obj->labels->name;
+		$terms = get_terms($this->taxonomy);
+		
+		if (count($terms) > 0) {
+			echo "<select name='".$this->taxonomy."' id='".$this->taxonomy."' class='postform'>";
+			echo "<option value=''>Show All ".$tax_name."</option>";
+			
+			foreach ($terms as $term) { 
+				echo '<option value='. $term->slug, isset($_GET[ $this->taxonomy]) && $_GET[ $this->taxonomy] == $term->slug ? ' selected="selected"' : '','>' . $term->name .' (' . $term->count .')</option>'; 
+			}
+			
+			echo "</select>";
+		}
+		
+	}
+    		
 
 }

@@ -101,7 +101,7 @@ class WordPress_Plugin_Template_Post_Type {
 			'capability_type' => 'post',
 			'has_archive' => true,
 			'hierarchical' => true,
-			'supports' => array( 'title', 'editor', 'excerpt', 'comments', 'thumbnail' ),
+			'supports' => array( 'title', 'editor', 'excerpt', 'comments', 'thumbnail','author' ),
 			'menu_position' => 5,
 			'menu_icon' => 'dashicons-admin-post',
 		);
