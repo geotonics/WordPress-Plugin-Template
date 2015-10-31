@@ -45,6 +45,9 @@ Using the [taxonomy API](https://github.com/geotonics/WordPress-Plugin-Template/
 
 This will register a new taxonomy with all the standard settings. If you would like to modify the taxonomy settings you can use the `{$taxonomy}_register_args` filter. See [the WordPress codex page](http://codex.wordpress.org/Function_Reference/register_taxonomy) for all available arguments.
 
+To filter post types by taxonomies, simply use ->add_filter() to the Taxonomy object. An example is included. 
+ 
+
 ## What does this template give me?
 
 This template includes the following features:
@@ -60,6 +63,8 @@ This template includes the following features:
 + A library for handling common admin functions (including adding meta boxes to any post type, displaying settings fields and display custom fields for posts)
 + A complete and versatile settings class 
 + A complete and versatile class for creating example post types and thier metaboxes
+* An example of easily adding a taxonomy filter to a post type. 
+* An example of a selecting posts of another post type. In the example, you can select Baby Gizmos from a select menu in the Gizmo metabox. 
 + Full text of the GPLv2 license
 
 ## I've got an idea/fix for the template

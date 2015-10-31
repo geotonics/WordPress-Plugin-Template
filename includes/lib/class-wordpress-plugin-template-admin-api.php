@@ -240,7 +240,11 @@ class WordPress_Plugin_Template_Admin_API {
             'post_type' => $post_type,
             'post_status' => 'publish',
             'posts_per_page' => -1,
-            'author' =>$post->post_author
+            /* 
+                Insures that the result will only include posts which are created by the same author as the parent post
+                If you want to show all posts regardless of the author, remove this line. 
+            */ 
+            'author' =>$post->post_author 
         );
         
         $options = array();

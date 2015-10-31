@@ -27,17 +27,18 @@ class WordPress_Plugin_Template_Post_Types
 	public function __construct ($parent) {
 	    $this->parent = $parent;
 	    
-	    // Register an example custom type:gizmo
-	    $this->parent->register_post_type( 'gizmo', __( 'Gizmos', '' ), __( 'Gizmo', 'wordpress-plugin-template' ) );
-	    
-	    // Register a custom type which will be a child of gizmo
-	    $this->parent->register_post_type( 'baby_gizmo', __( 'Baby Gizmos', '' ), __( 'Baby Gizmo', 'wordpress-plugin-template' ) );
+	    // Register an example custom type:Gizmo
+	    $this->parent->register_post_type( 'gizmo', __( 'Gizmos', '' ), __( 'Gizmo', 'wordpress-plugin-template' ), "A post type with extensive examples of metaboxes");
 	    
 	    // Register a custom taxonomy for gizmos
 	    $gizmo_category_taxonomy = $this->parent->register_taxonomy( 'gizmo_categories', __( 'Gizmo Categories', 'wordpress-plugin-template' ), __( 'Gizmo Category', 'wordpress-plugin-template' ), 'gizmo' );
 	    
 	    // Add taxonomy filter to Gizmo edit page
 	    $gizmo_category_taxonomy->add_filter(); 
+	    
+	    // Register Baby Gizmo, a custom type which will be a child of Gizmo
+	    $this->parent->register_post_type( 'baby_gizmo', __( 'Baby Gizmos', '' ), __( 'Baby Gizmo', 'wordpress-plugin-template' ), "A custom post type which will be a child of Gizmos", array("show_in_menu"=>true));
+	  
         
         add_action( 'add_meta_boxes', array($this,'add_meta_boxes'));
 	}

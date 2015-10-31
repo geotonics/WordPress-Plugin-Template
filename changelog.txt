@@ -3,6 +3,8 @@
 2015.10.30 - version 4.0.0
  * New - Added class for creating custom post types, adding metaboxes and taxonomies.
  * New - Added ability to create tabs in metaboxes in api class
+ * New - Added a way to filter custom post types by taxonomies
+ * New - Added a way to select another custom post type in a metabox
 
 2014.08.05 - version 3.0.0
  * New - Library for registering post types
