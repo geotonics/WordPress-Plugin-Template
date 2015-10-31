@@ -122,19 +122,19 @@ sed "s/Plugin Template/$NAME/g" class-$SLUG-settings.tmp > class-$SLUG-settings.
 rm class-$SLUG-settings.tmp
 
 
-mv class-$DEFAULT_SLUG-meta.php class-$SLUG-meta.php
+mv class-$DEFAULT_SLUG-post-types.php class-$SLUG-post-types.php
 
-cp class-$SLUG-meta.php class-$SLUG-meta.tmp
-sed "s/$DEFAULT_CLASS/$CLASS/g" class-$SLUG-meta.tmp > class-$SLUG-meta.php
-rm class-$SLUG-meta.tmp
+cp class-$SLUG-post-types.php class-$SLUG-post-types.tmp
+sed "s/$DEFAULT_CLASS/$CLASS/g" class-$SLUG-post-types.tmp > class-$SLUG-post-types.php
+rm class-$SLUG-post-types.tmp
 
-cp class-$SLUG-meta.php class-$SLUG-meta.tmp
-sed "s/$DEFAULT_TOKEN/$TOKEN/g" class-$SLUG-meta.tmp > class-$SLUG-meta.php
-rm class-$SLUG-meta.tmp
+cp class-$SLUG-post-types.php class-$SLUG-post-types.tmp
+sed "s/$DEFAULT_TOKEN/$TOKEN/g" class-$SLUG-post-types.tmp > class-$SLUG-post-types.php
+rm class-$SLUG-post-types.tmp
 
-cp class-$SLUG-meta.php class-$SLUG-meta.tmp
-sed "s/$DEFAULT_SLUG/$SLUG/g" class-$SLUG-meta.tmp > class-$SLUG-meta.php
-rm class-$SLUG-meta.tmp
+cp class-$SLUG-post-types.php class-$SLUG-post-types.tmp
+sed "s/$DEFAULT_SLUG/$SLUG/g" class-$SLUG-post-types.tmp > class-$SLUG-post-types.php
+rm class-$SLUG-post-types.tmp
 
 
 cd lib
