@@ -417,10 +417,15 @@ class WordPress_Plugin_Template_Admin_API {
 		if ( ! $post_id ) return;
 
 		$post_type = get_post_type( $post_id );
-
-		if ( ! wp_verify_nonce( $_REQUEST["wordpress-plugin-template_".$post_type . '_nonce'], "wordpress-plugin-template_".$post_type) ) {
-			return;
-		}
+        
+        if( isset($_REQUEST["wordpress-plugin-template_".$post_type . '_nonce']) ){
+    	
+    		if ( ! wp_verify_nonce( $_REQUEST["wordpress-plugin-template_".$post_type . '_nonce'], "wordpress-plugin-template_".$post_type) ) {
+    			return;
+    		}
+    	} else {
+    	    return;
+    	}
 		
         add_filter($post_type."_custom_fields", array($this->parent->post_types,$post_type."_custom_fields"),10,2);                                                
         $metaboxes = apply_filters( $post_type . '_custom_fields', array(), $post_type );
