@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class WordPress_Plugin_Template {
+class WordPress_Plugin_Template extends Wordpress_Plugin_Template_Init{
 
 	/**
 	 * The single instance of WordPress_Plugin_Template.
@@ -19,7 +19,21 @@ class WordPress_Plugin_Template {
 	 * @since   1.0.0
 	 */
 	public $settings = null;
+	
+	/**
+	 * Post_types class object
+	 * @var     object
+	 * @access  public
+	 * @since   1.0.0
+	 */
 	public $post_types     = null;
+	
+	/**
+	 * Admin Api class object
+	 * @var     object
+	 * @access  public
+	 * @since   1.0.0
+	 */
 	public $admin    = null;
 
 	/**
@@ -77,20 +91,32 @@ class WordPress_Plugin_Template {
 	 * @since   1.0.0
 	 */
 	public $script_suffix;
-
-	/**
-	 * Constructor function.
-	 * @access  public
-	 * @since   1.0.0
-	 * @return  void
-	 */
-	 
+	
 	public function __construct ( $file = '', $version = '1.0.0' ) {
-		$this->_version = $version;
+	    $this->_version = $version;
+	    $this->file = $file;
+	    parent::__construct();
+
+	    if ($this->phpVersionCheck()) {
+            // Only load and run the init function if we know PHP version can parse it
+            $this->init();
+        }
+		
+	} // End __construct ()
+
+    private function init(){
+
+        // Load plugin class files
+        require_once( 'class-wordpress-plugin-template-settings.php' );
+        require_once( 'class-wordpress-plugin-template-post-types.php' );
+        
+        // Load plugin libraries
+        require_once( 'lib/class-wordpress-plugin-template-admin-api.php' );
+        require_once( 'lib/class-wordpress-plugin-template-post-type.php' );
+        require_once( 'lib/class-wordpress-plugin-template-taxonomy.php' );
 		$this->_token = 'wordpress_plugin_template';
 
 		// Load plugin environment variables
-		$this->file = $file;
 		$this->dir = dirname( $this->file );
 		$this->assets_dir = trailingslashit( $this->dir ) . 'assets';
 		$this->assets_url = esc_url( trailingslashit( plugins_url( '/assets/', $this->file ) ) );
@@ -116,7 +142,21 @@ class WordPress_Plugin_Template {
 		// Handle localisation
 		$this->load_plugin_textdomain();
 		add_action( 'init', array( $this, 'load_localisation' ), 0 );
-	} // End __construct ()
+		
+		// Add admin settings
+		if ( is_null( $this->settings ) ) {
+		    $this->settings = WordPress_Plugin_Template_Settings::instance( $this );
+	    }
+	
+    	// Add custom post types
+    	if ( is_null( $this->post_types ) ) {
+    	    $this->post_types = WordPress_Plugin_Template_Post_Types::instance($this);
+        }
+	}
+
+
+
+
 
 	/**
 	 * Wrapper function to register a new post type
@@ -236,6 +276,15 @@ class WordPress_Plugin_Template {
 	    load_plugin_textdomain( $domain, false, dirname( plugin_basename( $this->file ) ) . '/lang/' );
 	} // End load_plugin_textdomain ()
 
+
+
+
+
+
+
+
+
+
 	/**
 	 * Main WordPress_Plugin_Template Instance
 	 *
@@ -247,6 +296,7 @@ class WordPress_Plugin_Template {
 	 * @return Main WordPress_Plugin_Template instance
 	 */
 	public static function instance ( $file = '', $version = '1.0.0' ) {
+	
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self( $file, $version );
 		}

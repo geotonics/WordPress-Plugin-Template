@@ -121,6 +121,9 @@ cp class-$SLUG-settings.php class-$SLUG-settings.tmp
 sed "s/Plugin Template/$NAME/g" class-$SLUG-settings.tmp > class-$SLUG-settings.php
 rm class-$SLUG-settings.tmp
 
+cp class-$SLUG-init.php class-$SLUG-init.tmp
+sed "s/$DEFAULT_SLUG/$SLUG/g" class-$SLUG-init.tmp > class-$SLUG-init.php
+rm class-$SLUG-init.tmp
 
 mv class-$DEFAULT_SLUG-post-types.php class-$SLUG-post-types.php
 
