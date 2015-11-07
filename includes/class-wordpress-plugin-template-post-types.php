@@ -47,10 +47,13 @@ class WordPress_Plugin_Template_Post_Types
 	 * @return void
 	 */
 	function add_meta_boxes(){
-       global $post;
-       add_filter($post->post_type."_custom_fields", array($this,$post->post_type."_custom_fields"),10,2);  
-       $this->parent->admin->add_meta_box ('standard',__( 'Standard', 'wordpress-plugin-template' ),array("gizmo", "baby_gizmo"));
-       $this->parent->admin->add_meta_box ('extra',__( 'Extra', 'wordpress-plugin-template' ), array("gizmo"));
+        global $post;
+        
+        if (method_exists($this,$post->post_type."_custom_fields") ){
+            add_filter($post->post_type."_custom_fields", array($this,$post->post_type."_custom_fields"),10,2);  
+            $this->parent->admin->add_meta_box ('standard',__( 'Standard', 'wordpress-plugin-template' ),array("gizmo", "baby_gizmo"));
+            $this->parent->admin->add_meta_box ('extra',__( 'Extra', 'wordpress-plugin-template' ), array("gizmo"));
+        }
     }
     
     /**
