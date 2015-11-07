@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class WordPress_Plugin_Template extends Wordpress_Plugin_Template_Init{
+class WordPress_Plugin_Template extends WordPress_Plugin_Template_Init{
 
 	/**
 	 * The single instance of WordPress_Plugin_Template.

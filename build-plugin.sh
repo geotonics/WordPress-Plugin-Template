@@ -21,10 +21,17 @@ CLASS=${NAME// /_}
 TOKEN=$( tr '[A-Z]' '[a-z]' <<< $CLASS)
 SLUG=${TOKEN//_/-}
 
+echo "DEFAULT_NAME:$DEFAULT_NAME";
+echo "DEFAULT_CLASS:$DEFAULT_CLASS";
+echo "DEFAULT_TOKEN:$DEFAULT_TOKEN";
+echo "DEFAULT_SLUG:$DEFAULT_SLUG";
+
 echo "CLASS:$CLASS"
 echo "TOKEN:$TOKEN"
 echo "SLUG:$SLUG"
 echo "NAME:$NAME"
+
+
 git clone https://github.com/geotonics/$DEFAULT_SLUG.git $FOLDER/$SLUG
 
 echo "Removing git files..."
@@ -121,8 +128,10 @@ cp class-$SLUG-settings.php class-$SLUG-settings.tmp
 sed "s/Plugin Template/$NAME/g" class-$SLUG-settings.tmp > class-$SLUG-settings.php
 rm class-$SLUG-settings.tmp
 
+mv class-$DEFAULT_SLUG-init.php class-$SLUG-init.php
+
 cp class-$SLUG-init.php class-$SLUG-init.tmp
-sed "s/$DEFAULT_SLUG/$SLUG/g" class-$SLUG-init.tmp > class-$SLUG-init.php
+sed "s/$DEFAULT_CLASS/$CLASS/g" class-$SLUG-init.tmp > class-$SLUG-init.php
 rm class-$SLUG-init.tmp
 
 mv class-$DEFAULT_SLUG-post-types.php class-$SLUG-post-types.php
@@ -170,9 +179,7 @@ cp class-$SLUG-taxonomy.php class-$SLUG-taxonomy.tmp
 sed "s/$DEFAULT_SLUG/$SLUG/g" class-$SLUG-taxonomy.tmp > class-$SLUG-taxonomy.php
 rm class-$SLUG-taxonomy.tmp
 
-
 mv class-$DEFAULT_SLUG-admin-api.php class-$SLUG-admin-api.php
-
 cp class-$SLUG-admin-api.php class-$SLUG-admin-api.tmp
 sed "s/$DEFAULT_CLASS/$CLASS/g" class-$SLUG-admin-api.tmp > class-$SLUG-admin-api.php
 rm class-$SLUG-admin-api.tmp
