@@ -1,7 +1,31 @@
 <?php
+/**
+ * Document for class WordPress_Plugin_Template_Taxonomy
+ *
+ * PHP Version 5.6
+ *
+ * @category Class
+ * @package WordPress_Plugin_Template
+ * @author   Peter Pitchford <peter@geotonics.com>
+ * @license  GNU Lesser General Public Licence see LICENCE file or http://www.gnu.org/licenses/lgpl.html
+ * @link     http://geotonics.com/
+ */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
+/**
+ * Class to create taxonomies for custom post types
+ *
+ * @category library
+ * @package  WordPress_Plugin_Template
+ * @author   Peter Pitchford <peter@geotonics.com>
+ * @license  GNU Lesser General Public Licence see LICENCE file or http://www.gnu.org/licenses/lgpl.html
+ * @version  Release: .1
+ * @link     http://geotonics.com
+ * @since    Class available since Release .1
+ */
 class WordPress_Plugin_Template_Taxonomy {
 
 	/**
@@ -36,7 +60,7 @@ class WordPress_Plugin_Template_Taxonomy {
 	 */
 	public $post_types;
 
-  /**
+	/**
 	 * The array of taxonomy arguments
 	 * @var 	array
 	 * @access  public
@@ -44,11 +68,22 @@ class WordPress_Plugin_Template_Taxonomy {
 	 */
 	public $taxonomy_args;
 
-	public function __construct ( $taxonomy = '', $plural = '', $single = '', $post_types = array(), $tax_args = array() ) {
+	/**
+	 * Constructor for WordPress_Plugin_Template_Taxonomy class
+	 *
+	 * @param string $taxonomy Taxonomy slug.
+	 * @param string $plural     Plural taxonomy name.
+	 * @param string $single     Singular taxonomy name.
+	 * @param array  $post_types Post types to apply this taxonomy to.
+	 * @param array  $tax_args   Arguments to overided default taxonomy options.
+	 *
+	 * @return void
+	 */
+	public function __construct( $taxonomy = '', $plural = '', $single = '', $post_types = array(), $tax_args = array() ) {
 
-		if ( ! $taxonomy || ! $plural || ! $single ) return;
+		if ( ! $taxonomy || ! $plural || ! $single ) { return; }
 
-		// Post type name and labels
+		// Post type name and labels.
 		$this->taxonomy = $taxonomy;
 		$this->plural = $plural;
 		$this->single = $single;
@@ -58,82 +93,89 @@ class WordPress_Plugin_Template_Taxonomy {
 		$this->post_types = $post_types;
 		$this->taxonomy_args = $tax_args;
 
-		// Register taxonomy
-		add_action('init', array( $this, 'register_taxonomy' ) );
+		// Register taxonomy.
+		add_action( 'init', array( $this, 'register_taxonomy' ) );
 	}
 
 	/**
 	 * Register new taxonomy
 	 * @return void
 	 */
-	public function register_taxonomy () {
+	public function register_taxonomy() {
 
-        $labels = array(
-            'name' => $this->plural,
-            'singular_name' => $this->single,
-            'menu_name' => $this->plural,
-            'all_items' => sprintf( __( 'All %s' , 'wordpress-plugin-template' ), $this->plural ),
-            'edit_item' => sprintf( __( 'Edit %s' , 'wordpress-plugin-template' ), $this->single ),
-            'view_item' => sprintf( __( 'View %s' , 'wordpress-plugin-template' ), $this->single ),
-            'update_item' => sprintf( __( 'Update %s' , 'wordpress-plugin-template' ), $this->single ),
-            'add_new_item' => sprintf( __( 'Add New %s' , 'wordpress-plugin-template' ), $this->single ),
-            'new_item_name' => sprintf( __( 'New %s Name' , 'wordpress-plugin-template' ), $this->single ),
-            'parent_item' => sprintf( __( 'Parent %s' , 'wordpress-plugin-template' ), $this->single ),
-            'parent_item_colon' => sprintf( __( 'Parent %s:' , 'wordpress-plugin-template' ), $this->single ),
-            'search_items' =>  sprintf( __( 'Search %s' , 'wordpress-plugin-template' ), $this->plural ),
-            'popular_items' =>  sprintf( __( 'Popular %s' , 'wordpress-plugin-template' ), $this->plural ),
-            'separate_items_with_commas' =>  sprintf( __( 'Separate %s with commas' , 'wordpress-plugin-template' ), $this->plural ),
-            'add_or_remove_items' =>  sprintf( __( 'Add or remove %s' , 'wordpress-plugin-template' ), $this->plural ),
-            'choose_from_most_used' =>  sprintf( __( 'Choose from the most used %s' , 'wordpress-plugin-template' ), $this->plural ),
-            'not_found' =>  sprintf( __( 'No %s found' , 'wordpress-plugin-template' ), $this->plural ),
-        );
+		$labels = array(
+			'name' => $this->plural,
+			'singular_name' => $this->single,
+			'menu_name' => $this->plural,
+			'all_items' => sprintf( __( 'All %s' , 'wordpress-plugin-template' ), $this->plural ),
+			'edit_item' => sprintf( __( 'Edit %s' , 'wordpress-plugin-template' ), $this->single ),
+			'view_item' => sprintf( __( 'View %s' , 'wordpress-plugin-template' ), $this->single ),
+			'update_item' => sprintf( __( 'Update %s' , 'wordpress-plugin-template' ), $this->single ),
+			'add_new_item' => sprintf( __( 'Add New %s' , 'wordpress-plugin-template' ), $this->single ),
+			'new_item_name' => sprintf( __( 'New %s Name' , 'wordpress-plugin-template' ), $this->single ),
+			'parent_item' => sprintf( __( 'Parent %s' , 'wordpress-plugin-template' ), $this->single ),
+			'parent_item_colon' => sprintf( __( 'Parent %s:' , 'wordpress-plugin-template' ), $this->single ),
+			'search_items' => sprintf( __( 'Search %s' , 'wordpress-plugin-template' ), $this->plural ),
+			'popular_items' => sprintf( __( 'Popular %s' , 'wordpress-plugin-template' ), $this->plural ),
+			'separate_items_with_commas' => sprintf( __( 'Separate %s with commas' , 'wordpress-plugin-template' ), $this->plural ),
+			'add_or_remove_items' => sprintf( __( 'Add or remove %s' , 'wordpress-plugin-template' ), $this->plural ),
+			'choose_from_most_used' => sprintf( __( 'Choose from the most used %s' , 'wordpress-plugin-template' ), $this->plural ),
+			'not_found' => sprintf( __( 'No %s found' , 'wordpress-plugin-template' ), $this->plural ),
+		);
 
-        $args = array(
-        	'label' => $this->plural,
-        	'labels' => apply_filters( $this->taxonomy . '_labels', $labels ),
-        	'hierarchical' => true,
-            'public' => true,
-            'show_ui' => true,
-            'show_in_nav_menus' => true,
-            'show_tagcloud' => true,
-            'meta_box_cb' => null,
-            'show_admin_column' => true,
-            'update_count_callback' => '',
-            'query_var' => $this->taxonomy,
-            'rewrite' => true,
-            'sort' => '',
-        );
+		$args = array(
+			'label' => $this->plural,
+			'labels' => apply_filters( $this->taxonomy . '_labels', $labels ),
+			'hierarchical' => true,
+			'public' => true,
+			'show_ui' => true,
+			'show_in_nav_menus' => true,
+			'show_tagcloud' => true,
+			'meta_box_cb' => null,
+			'show_admin_column' => true,
+			'update_count_callback' => '',
+			'query_var' => $this->taxonomy,
+			'rewrite' => true,
+			'sort' => '',
+		);
 
-        $args = array_merge($args, $this->taxonomy_args);
+		$args = array_merge( $args, $this->taxonomy_args );
 
-        register_taxonomy( $this->taxonomy, $this->post_types, apply_filters( $this->taxonomy . '_register_args', $args, $this->taxonomy, $this->post_types ) );
-    }
-    
-    public function add_filter(){
-
-        if (isset($_GET["post_type"]) && in_array($_GET["post_type"],$this->post_types)) {
-		    add_action( 'restrict_manage_posts', array($this,'display_filter') );
-	    }
-    }
-
-    public function display_filter() {
-	
-		$tax_obj = get_taxonomy($this->taxonomy);
-		$tax_name = $tax_obj->labels->name;
-		$terms = get_terms($this->taxonomy);
-		
-		if (count($terms) > 0) {
-			echo "<select name='".$this->taxonomy."' id='".$this->taxonomy."' class='postform'>";
-			echo "<option value=''>Show All ".$tax_name."</option>";
-			
-			foreach ($terms as $term) { 
-				echo '<option value='. $term->slug, isset($_GET[ $this->taxonomy]) && $_GET[ $this->taxonomy] == $term->slug ? ' selected="selected"' : '','>' . $term->name .' (' . $term->count .')</option>'; 
-			}
-			
-			echo "</select>";
-		}
-		
+		register_taxonomy( $this->taxonomy, $this->post_types, apply_filters( $this->taxonomy . '_register_args', $args, $this->taxonomy, $this->post_types ) );
 	}
-    		
 
+	/**
+	 * Add taxonomy filter to post type edit page
+	 * @return void
+	 */
+	public function add_filter() {
+
+		if ( in_array( filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_STRING ),$this->post_types ) ) {
+		    add_action( 'restrict_manage_posts', array( $this, 'display_filter' ) );
+	    }
+	}
+
+
+	/**
+	 * Creates HTML for taxonomy filter on post type edit page
+	 * @return void
+	 */
+	public function display_filter() {
+
+		$tax_obj = get_taxonomy( $this->taxonomy );
+		$tax_name = $tax_obj->labels->name;
+		$terms = get_terms( $this->taxonomy );
+
+		if ( count( $terms ) > 0 ) {
+			echo "<select name='".esc_attr( $this->taxonomy )."' id='".esc_attr( $this->taxonomy )."' class='postform'>";
+			echo "<option value=''>Show All ".esc_html( $tax_name ).'</option>';
+
+			foreach ( $terms as $term ) {
+				echo '<option value='. $term->slug,  filter_input( INPUT_GET, $this->taxonomy, FILTER_SANITIZE_STRING ) === esc_attr( $term->slug ) ? ' selected="selected"' : '','>' . esc_attr( $term->name ) .' (' . esc_attr( $term->count ) .')</option>';
+			}
+
+			echo '</select>';
+		}
+
+	}
 }

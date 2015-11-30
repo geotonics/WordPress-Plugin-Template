@@ -4,9 +4,10 @@ WordPress Plugin Template
 A robust code template for creating a standards-compliant WordPress plugin.
 
 
+
 ## Why this template?
 
-After writing many WordPress plugins I slowly developed my own coding style and way of doing things - this template is the culmination of what I've learnt along the way. I use this template as a base for any plugin that I start building and I thought it might benefit more people if I shared it around.
+This template is coded to the Wordpress VIP Standard. It includes many features that you might want to use in your plugin. 
 
 ## How do I use it?
 

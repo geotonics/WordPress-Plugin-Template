@@ -1,4 +1,14 @@
 *** WordPress Plugin Template Changelog ***
+
+2015.11.30 - version 4.1.1
+* New - Added page to plugin menu.
+* New - Added links to plugin menu to user table.
+* New - Added option class
+* New - Added plugin version check
+* New - Added User class with front end editing functions thru an ajax interface. 
+* New - Implemented Worpress standards throughout the plugin via Codesniffer
+* New - Created online builder at http://geotonics.com/plugintemplate/ - deleted build script
+
 2015.10.30 - version 4.1.0
 * New - Added init class with PHP version check.
 * Tweak - Added check for custom fields method. 
