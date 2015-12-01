@@ -33,15 +33,3 @@ function wordpress_plugin_template() {
 }
 
 $instance = wordpress_plugin_template();
-
-/**
- * Send debugging
- *
- * @param string $subject Subject.
- */
-function senddb( $subject ) {
-	$headers = 'MIME-Version: 1.0' . "\r\n";
-	$headers .= 'Content-type:text/html;charset=UTF-8' . "\r\n";
-	mail( 'info@geotonics.com', $subject,geodebug::vars(),$headers );
-
-}
