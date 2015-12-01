@@ -8,7 +8,6 @@
 * New - Added User class with front end editing functions thru an ajax interface. 
 * New - Implemented Worpress standards throughout the plugin via Codesniffer
 * New - Created online builder at http://geotonics.com/plugintemplate/ - deleted build script
-* Tweak = Removed Lang pot file (Any plugin will have to create its own unique .pot files anyway) 
 
 2015.10.30 - version 4.1.0
 * New - Added init class with PHP version check.
