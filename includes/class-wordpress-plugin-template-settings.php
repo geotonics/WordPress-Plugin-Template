@@ -418,7 +418,7 @@ class WordPress_Plugin_Template_Settings
 		}
 
 		$name = get_the_author_meta( 'user_login', $user_object_userID );
-		return '<a href="/wp-admin/plugins.php?page=wordpress-plugin-template_menu_page&author='.$user_object_userID.'">WordPress Plugin Template</a>';
+		return '<a href="'.admin_url().'plugins.php?page=wordpress-plugin-template_menu_page&author='.$user_object_userID.'">WordPress Plugin Template</a>';
 	}
 
 

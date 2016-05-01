@@ -82,7 +82,7 @@ class WordPress_Plugin_Template_Init
 	} // End __construct ().
 
 	/**
-	 * Provide a useful error message when the user's version is less than the required version
+	 * Provide a useful error message when the user's PHP version is less than the required version
 	 */
 	public function notice_php_version_wrong() {
 		$allowed = array(
@@ -169,6 +169,7 @@ class WordPress_Plugin_Template_Init
 	public function is_version_less_than( $version1, $version2 ) {
 		return (version_compare( $version1, $version2 ) < 0);
 	}
+	
 	/**
 	 * Provide a useful error message if the Plugin has been updated.
 	 */
@@ -189,7 +190,6 @@ class WordPress_Plugin_Template_Init
 	 * @return  void
 	 */
 	public function log_version_number() {
-
 		$this->option->update_option( '_version', $this->_version );
 	} // End _log_version_number ()
 }

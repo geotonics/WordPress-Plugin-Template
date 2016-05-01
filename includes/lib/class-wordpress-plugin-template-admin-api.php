@@ -476,6 +476,7 @@ geodb($field,'field');
 		    ),
 		    'option' => array(
 		    	'value' => array(),
+		    	'selected' => array(),
 		    ),
 		    'img' => array(
 		    	'src' => array(),

@@ -243,7 +243,7 @@ class WordPress_Plugin_Template_Post_Types
 	}
 
 	/**
-	 * Display user data in WordPress admin
+	 * Display user data for this plugin in WordPress admin from the "Plugin" menu
 	 */
 	public function wordpress_plugin_template_data_display() {
 
@@ -260,7 +260,7 @@ class WordPress_Plugin_Template_Post_Types
 		} else {
 			$all = 'All ';
 			$author = $author_name = '';
-			$user_links = '<p> Links to the clockins and companies for each user are also available on the <a href="/wp-admin/users.php">users page</a> </p>';
+			$user_links = '<p> Links to the custom post types authored by each user are also available on the <a href="'.admin_url().'users.php">users page</a> </p>';
 			$User = '';
 		}
 
