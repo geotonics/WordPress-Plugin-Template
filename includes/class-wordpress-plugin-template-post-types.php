@@ -53,8 +53,9 @@ class WordPress_Plugin_Template_Post_Types
 		$this->parent = $parent;
 
 		// Register an example custom type:Gizmo.
+		// The parent class invokes WordPress_Plugin_Template_Post_Type
 		$this->parent->register_post_type( 'gizmo', __( 'Gizmos', '' ), __( 'Gizmo', 'wordpress-plugin-template' ), 'A post type with extensive examples of metaboxes' );
-
+		$this->archive_templates("gizmo");
 		// Register a custom taxonomy for gizmos.
 		$gizmo_category_taxonomy = $this->parent->register_taxonomy( 'gizmo_categories', __( 'Gizmo Categories', 'wordpress-plugin-template' ), __( 'Gizmo Category', 'wordpress-plugin-template' ), 'gizmo' );
 
@@ -221,6 +222,42 @@ class WordPress_Plugin_Template_Post_Types
 		return $fields;
 	}
 
+
+	/**
+	 * Use templates in the plugin for posttype archives
+	 * @param String $posttype Name of posttype being archived
+	 */
+	public function archive_templates($posttype){
+		
+		add_filter('single_template', function($single_template) use($posttype){
+		
+			global $post;
+			// Check for overiding template in theme
+			$found = locate_template('single-'.$posttype.'.php');
+
+			if ($post->post_type == $posttype && $found == '' ) {
+				$single_template = dirname(__FILE__).'/templates/single-'.$posttype.'.php';
+			}
+		  
+		  	return $single_template;
+		});
+		
+		add_filter('archive_template', function ($template) use($posttype){
+
+			if (is_post_type_archive($posttype)) {
+	    		$theme_files = array('archive-'.$posttype.'.php');
+	    		// Check for overiding template in theme
+	    		$exists_in_theme = locate_template($theme_files, false);
+	    
+		    	if ($exists_in_theme == '') {
+		      		return plugin_dir_path(__FILE__) . 'templates/archive-'.$posttype.'.php';
+		    	}
+	  		}
+	  	
+	  		return $template;
+		});
+	}
+
 	/**
 	 * Supply metaboxes for baby gizmo post type edit page
 	 *
@@ -299,7 +336,6 @@ class WordPress_Plugin_Template_Post_Types
 	 * @since  4.1.1
 	 */
 	public function wordpress_plugin_template_menu() {
-
 		add_plugins_page( 'WordPress Plugin Template', 'Plugin Template', 'read', 'wordpress-plugin-template_menu_page', array( $this, 'wordpress_plugin_template_data_display' ) );
 	}
 

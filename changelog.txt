@@ -1,5 +1,8 @@
 *** WordPress Plugin Template Changelog ***
 
+2016.5.8 - version 4.1.2
+* New Added archive templates
+
 2015.11.30 - version 4.1.1
 * New - Added page to plugin menu.
 * New - Added links to plugin menu to user table.

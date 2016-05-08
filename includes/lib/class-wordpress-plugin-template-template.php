@@ -126,7 +126,7 @@ class WordPress_Plugin_Template_Template {
 
 		}
 
-		$file = plugin_dir_path( $this->parent->file ). 'templates/'.get_post_meta(
+		$file = plugin_dir_path( $this->parent->file ). 'includes/templates/'.get_post_meta(
 			$post->ID, '_wp_page_template', true
 		);
 

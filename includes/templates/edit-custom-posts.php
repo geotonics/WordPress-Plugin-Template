@@ -31,7 +31,7 @@ get_header(); ?>
 			<?php endwhile; // End of the loop. ?>
 			<?php
 			global $current_user;
-      		get_currentuserinfo();
+      		wp_get_current_user();
       		
       		$User=new WordPress_Plugin_Template_User($current_user->ID,$instance);
       		$User->display_data();

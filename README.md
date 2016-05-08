@@ -57,6 +57,7 @@ This template includes the following features:
 + A complete and versatile class for creating example post types and thier metaboxes
 * An example of easily adding a taxonomy filter to a post type. 
 * An example of a selecting posts of another post type. In the example, you can select Baby Gizmos from a select menu in the Gizmo metabox. 
+* Single and Archive templates which are rewritable in either a theme or a child theme. 
 + Full text of the GPLv2 license
 
 ## I've got an idea/fix for the template
