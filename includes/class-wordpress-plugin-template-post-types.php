@@ -238,7 +238,7 @@ class WordPress_Plugin_Template_Post_Types
 			if ($post->post_type == $posttype && $found == '' ) {
 				$single_template = dirname(__FILE__).'/templates/single-'.$posttype.'.php';
 			}
-		  
+		  geodb($single_template,'$single_template');
 		  	return $single_template;
 		});
 		
