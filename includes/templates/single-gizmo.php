@@ -14,17 +14,13 @@ get_header(); ?>
 
 		<?php
 		while ( have_posts() ) : the_post();
-			geodb(dirname(__FILE__),'dirname');
 			$theme_files = array('template-parts/content-'.get_post_type().'.php');
-			geodb($theme_files,'theme_files');
 	    		// Check for overiding template in theme
 	    	$exists_in_theme = locate_template($theme_files);
-	    	geodb($exists_in_theme,'contentexists_in_theme');
 	    	if ($exists_in_theme) {
 	    		get_template_part( 'template-parts/content', get_post_type() );
 	    	} else {
 				$template=dirname(__FILE__)."/content-".get_post_type().".php";
-				geodb($template,'template');
 				$file_exists=file_exists($template);
 				
 				if ($file_exists) {
