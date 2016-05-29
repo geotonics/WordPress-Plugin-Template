@@ -315,6 +315,10 @@ class WordPress_Plugin_Template extends WordPress_Plugin_Template_Init
 			esc_url( $this->assets_url ) . 'js/jquery-ui-timepicker-addon.js',
 			array( 'jquery','jquery-ui-datepicker' )
 		);
+		
+		// We're including the WP media scripts here because they're needed for the image upload field.
+		// If you're not including an image upload then you can leave this function call out.
+		wp_enqueue_media();
 
 	} // End admin_enqueue_scripts ()
 

@@ -120,10 +120,6 @@ class WordPress_Plugin_Template_Settings
 		wp_enqueue_style( 'farbtastic' );
 		wp_enqueue_script( 'farbtastic' );
 
-		// We're including the WP media scripts here because they're needed for the image upload field.
-		// If you're not including an image upload then you can leave this function call out.
-		wp_enqueue_media();
-
 		wp_register_script( $this->parent->_token . '-settings-js', $this->parent->assets_url . 'js/settings' . $this->parent->script_suffix . '.js', array( 'farbtastic', 'jquery' ), '1.0.0' );
 		wp_enqueue_script( $this->parent->_token . '-settings-js' );
 	}
