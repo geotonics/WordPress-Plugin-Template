@@ -23,7 +23,6 @@ get_header(); ?>
 	    		get_template_part( $template_path );
 	    	} else {
 				$template=dirname(__FILE__)."/".$template_path;
-				geodb($template,'template');
 				$file_exists=file_exists($template);
 				
 				if ($file_exists) {
