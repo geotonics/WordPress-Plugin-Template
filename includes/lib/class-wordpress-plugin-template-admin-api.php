@@ -355,7 +355,7 @@ class WordPress_Plugin_Template_Admin_API
 		if ( ! is_array( $fields ) || 0 === count( $fields ) ) {
 			return;
 		}
-geodb($fields,'bidfields');
+
 		foreach ( $fields as $name => $tabs ) {
 
 			if ( $name !== $args['id'] ) {
@@ -388,7 +388,6 @@ geodb($fields,'bidfields');
 				echo '</div>';
 
 			} else {
-				geodb($tabs,'thetabs');
 				$this->display_metabox_fields( $name, $tabs, $post, $args );
 			}
 
@@ -408,7 +407,6 @@ geodb($fields,'bidfields');
 	 * @return void
 	 */
 	private function display_metabox_fields( $metabox, $fields, $post, $args ) {
-		geotrace('dmbf');geodb($fields,'fields');
 		
 		echo '<div class="custom-field-panel">' . "\n";
 		echo '<table class="form-table">' . "\n";
@@ -435,7 +433,7 @@ geodb($fields,'bidfields');
 		if ( ! is_array( $field ) || 0 === count( $field ) ) {
 			return;
 		}
-geodb($field,'field');
+
 		echo '<tr class=""><th><label for="' . esc_html( $field['id'] ) . '">' . esc_html( $field['label'] ) . '</label></th><td>'.
 			wp_kses( $this->display_field( $field, $post, false ), $this->allowed() ) .
 			'</td></tr>' . "\n";

@@ -71,7 +71,9 @@ class WordPress_Plugin_Template_User
 			'author' => $this->author,
 			);
 		$query = new WP_Query( $args );
-
+ 		
+ 		$baby_gizmos=array();
+ 		
 		if ( $query->have_posts() ) {
 
 			while ( $query->have_posts() ) {
@@ -82,13 +84,13 @@ class WordPress_Plugin_Template_User
 
 				if ( $post->post_type === 'gizmo' ) {
 
-					if ( $meta['date_picker_field'][0] ) {
+					if ( isset($meta['date_picker_field'][0]) ) {
 						$date = $meta['date_picker_field'][0];
 					} else {
 						$date = 'No Date';
 					}
 
-					if ( $meta['baby_gizmo_box'][0] ) {
+					if ( isset($meta['baby_gizmo_box'][0])) {
 						$baby = $meta['baby_gizmo_box'][0];
 					} else {
 						$baby = '0';
@@ -100,25 +102,29 @@ class WordPress_Plugin_Template_User
 				}
 			}
 		}
+		
+		if ($baby_gizmos) {
+		
+			foreach ( $baby_gizmos as $baby_id => $baby_gizmo ) {
 
-		foreach ( $baby_gizmos as $baby_id => $baby_gizmo ) {
+				echo "<h3 style='margin:0'>".esc_html( $baby_gizmo ).'</h2>';
 
-			echo "<h3 style='margin:0'>".esc_html( $baby_gizmo ).'</h2>';
+				if ( isset( $gizmos[ $baby_id ] ) ) {
 
-			if ( isset( $gizmos[ $baby_id ] ) ) {
+		            foreach ( $gizmos[ $baby_id ] as $date => $post_arr ) {
+		                echo '<h4>'.esc_html( $date )."</h4>
+		                <ul class='admin_list'>";
 
-	            foreach ( $gizmos[ $baby_id ] as $date => $post_arr ) {
-	                echo '<h4>'.esc_html( $date )."</h4>
-	                <ul class='admin_list'>";
+		                foreach ( $post_arr as $post_id => $post_title ) {
+		                    echo '<li class="edit_post_link" id="edit_post_link_'. esc_html( $post_id ).'">'. esc_html( $post_title ).'</li>';
+		                }
 
-	                foreach ( $post_arr as $post_id => $post_title ) {
-	                    echo '<li class="edit_post_link" id="edit_post_link_'. esc_html( $post_id ).'">'. esc_html( $post_title ).'</li>';
-	                }
+		                echo '</ul>';
 
-	                echo '</ul>';
-
-	            }
-	        }
+		            }
+		        }
+			}
+		
 		}
 
 		printf( // WPCS: XSS OK.
