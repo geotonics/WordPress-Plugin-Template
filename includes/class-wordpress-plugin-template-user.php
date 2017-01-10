@@ -57,76 +57,52 @@ class WordPress_Plugin_Template_User
 	}
 
 	/**
-	 * Display a summary of the users data, including custom post types
-	 * In this case were are displaying the parent custom types by the date of the selected child type,
-	 * but this is just an arbitrary example. Each custom post title has a jquery link which opens up a
-	 * full page modal with a form to edit the selected post.
+	 * Display User gizmos. 
 	 * @return void
 	 */
 	public function display_data() {
-
+		
 		echo "<div class='plugin_data'>";
 		$args = array(
-			'post_type' => array( 'gizmo', 'baby_gizmo' ),
-			'author' => $this->author,
-			);
+			'post_type' => array( 'gizmo' )
+			
+		);
+			
 		$query = new WP_Query( $args );
- 		
- 		$baby_gizmos=array();
- 		
-		if ( $query->have_posts() ) {
+		//$brands=$this->instance->brands("No brand selected");
+		//geodb($brands,'allthebrands');
 
+		if ( $query->have_posts() ) {
+			echo '<table class="gizmo">';
+			
 			while ( $query->have_posts() ) {
 				$query->the_post();
 
 				$post = get_post( get_the_id() );
 				$meta = get_post_meta( get_the_id() );
-
+								
 				if ( $post->post_type === 'gizmo' ) {
-
-					if ( isset($meta['date_picker_field'][0]) ) {
-						$date = $meta['date_picker_field'][0];
+					
+					if( isset($meta["date_picker_field"][0]) && $meta["date_picker_field"][0]) {
+						$date=$meta["date_picker_field"][0];
 					} else {
-						$date = 'No Date';
+						$date="";
 					}
-
-					if ( isset($meta['baby_gizmo_box'][0])) {
-						$baby = $meta['baby_gizmo_box'][0];
-					} else {
-						$baby = '0';
-					}
-
-					$gizmos[ $baby ][ $date ][ $post->ID ] = $post->post_title;
-				} else {
-					$baby_gizmos[ $post->ID ] = $post->post_title;
+					
+					echo '<tr>
+							<td class="entitle">'.$post->post_title.'</td>
+							<td class="enapproved">'.$date.'</td>
+							<td class="enedit"><a class="edit_post_link" id="edit_post_link_'. esc_html( $post->ID ).'">Edit</a></td>
+							
+							
+					</tr>';
 				}
 			}
-		}
-		
-		if ($baby_gizmos) {
-		
-			foreach ( $baby_gizmos as $baby_id => $baby_gizmo ) {
-
-				echo "<h3 style='margin:0'>".esc_html( $baby_gizmo ).'</h2>';
-
-				if ( isset( $gizmos[ $baby_id ] ) ) {
-
-		            foreach ( $gizmos[ $baby_id ] as $date => $post_arr ) {
-		                echo '<h4>'.esc_html( $date )."</h4>
-		                <ul class='admin_list'>";
-
-		                foreach ( $post_arr as $post_id => $post_title ) {
-		                    echo '<li class="edit_post_link" id="edit_post_link_'. esc_html( $post_id ).'">'. esc_html( $post_title ).'</li>';
-		                }
-
-		                echo '</ul>';
-
-		            }
-		        }
-			}
-		
+			
+			echo '</table>';
 		}
 
+		
 		printf( // WPCS: XSS OK.
 			'<div id="edit_post_box" class="popupBox lgPopupBox"></div>
 			<div id="edit_post_modal" class="modalBox popupCloser"></div>
@@ -138,5 +114,6 @@ class WordPress_Plugin_Template_User
 		wp_reset_postdata();
 		echo  '</div>';
 	}
+	
 }
 ?>

@@ -7,7 +7,7 @@
  * @package Wordpress Plugin Template
  */
 
-get_header(); geotrace('archive-gizmo');?>
+get_header(); geodb('archive gizmo');?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -30,15 +30,18 @@ get_header(); geotrace('archive-gizmo');?>
 				 * If you want to override this in a child theme, then include a file
 				 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
 				 */
-				 
+				 $post_format=get_post_format();
+				 if(!$post_format){
+				 	$post_format="gizmo-format";// default post format
+				}
 				// Check for overiding template in theme
-				$theme_files = array('template-parts/content-'.get_post_type().'.php');
+				$theme_files = array('template-parts/content-'.$post_format.'.php');
 	    		$exists_in_theme = locate_template($theme_files);
-				 
+
 				if ($exists_in_theme) {
-	    			get_template_part( 'template-parts/content', get_post_type() );
+	    			get_template_part( 'template-parts/content', $post_format );
 	    		} else {
-					$template=dirname(__FILE__)."/template-parts/content-".get_post_type().".php";
+					$template=dirname(__FILE__)."/template-parts/content-".$post_format.".php";
 					$file_exists=file_exists($template);
 				
 					if ($file_exists) {

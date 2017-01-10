@@ -30,11 +30,14 @@ get_header(); ?>
 
 			<?php endwhile; // End of the loop. ?>
 			<?php
+			echo '<div id="gizmos_table">';
 			global $current_user;
+			
       		wp_get_current_user();
       		
       		$User=new WordPress_Plugin_Template_User($current_user->ID,$instance);
       		$User->display_data();
+      		echo '</div>';
 			?>
 		</main><!-- #main -->
 	</div><!-- #primary -->

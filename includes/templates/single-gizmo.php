@@ -22,7 +22,7 @@ get_header(); ?>
 	    	if ($exists_in_theme) {
 	    		get_template_part( $template_path );
 	    	} else {
-				$template=dirname(__FILE__)."/".$template_path;
+				$template=dirname(__FILE__).$template_path;
 				$file_exists=file_exists($template);
 				
 				if ($file_exists) {
@@ -44,5 +44,5 @@ get_header(); ?>
 	</div><!-- #primary -->
 
 <?php
-get_sidebar();
+//get_sidebar();
 get_footer();

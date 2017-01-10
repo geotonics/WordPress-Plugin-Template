@@ -207,10 +207,17 @@ class WordPress_Plugin_Template extends WordPress_Plugin_Template_Init
 		}
 
 		// Add templates.
+		/*
+		
 		if ( is_null( $this->templates ) ) {
 			$this->templates = WordPress_Plugin_Template_Template::instance( $this );
 		}
-
+		
+		*/
+		// Add templates.
+		if ( is_null( $this->templates ) ) {
+			$this->templates =  WordPress_Plugin_Template_Template::instance($this);
+		}
 		// Include the Ajax library on the front end.
 		add_action( 'wp_head', array( &$this, 'add_ajax_library' ) );
 
